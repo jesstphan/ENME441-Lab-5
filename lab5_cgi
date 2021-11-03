@@ -4,5 +4,54 @@ import cgi
 import cgitb 
 import json 
 cgitb.enable()
+GPIO.setwarning(False)wa
 
-print('Content 
+data = cgi.FieldStorage()
+s1 = data.getvalue('slider1')
+b = data.getvalue('zerobutton')  
+info = {'slider1':s1 , 'zerobutton':b}
+with open('lab5.txt', 'w') as f:
+  json.dump(info,f)
+  
+ if info.get('slider1') != None:
+  AngleValue = info.get('slider1')
+ elif info.get('slider1') == None:
+  AngleValue = '0'
+  
+print('Content-type:text/html\n\n')
+print('<html>')
+print('<form action="/cgi-bin/stepper5.py" method="POST">')
+print('<input type="range" name="slider1" min ="0" max="360" value ="0">')
+print('<input type="submit" value="Submit Angle">')
+print('<br>')
+print('<input type="submit" name = 'zerobutton" value="Change back to zero"> ')
+print('<br>')                          
+print('<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1557923/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15">')
+print('</iframe>') 
+print('<br>')
+print('<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1557923/widgets/375670">')
+print('<br>')                      
+print('</iframe>')
+print('</form>')
+print('</html>')
+
+from urllib.request import urlopen
+from urllib.parse import urlencode
+
+api = "OCZBDSXPYYHEFKJK"
+
+GETparams = {"api_key":API_KEY, slider1:s1, zerobutton:b}
+GETparams = urlencode(GETparams)
+url = "https://api.thingspeak.com/update"
+response = urlopen(url + "?" + GETparams) 
+status = response.status
+reason = response.reason
+
+channel_num = 1557923 
+field_num = 1 
+url = "https://api.thingspeak.com/update?api_key=OCZBDSXPYYHEFKJK&field1=0
+GETparams = {"api_key":api_key}
+GETparams = urlencode(GETparams)
+response = urlopen(url + "?" + GETparams)
+data = response.read()
+print(response.status, response.reason) 
