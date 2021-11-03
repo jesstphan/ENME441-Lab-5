@@ -1,0 +1,8 @@
+#!/usr/bin/python37all
+
+import cgi 
+import cgitb 
+import json 
+cgitb.enable()
+
+print('Content 
