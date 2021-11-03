@@ -26,10 +26,11 @@ class Stepper:
     def __init__(self,pins,ledPin):
         GPIO.setmode(GPIO.BCM)
         pins = [18,21,22,23] # controller inputs: in1, in2, in3, in4
-        LEDpin = 26
         for pin in pins:
           GPIO.setup(pin, GPIO.OUT, initial=0)
+        LEDpin = 26
         GPIO.setup(LEDpin.GPIO.OUT, initial=0)
+        
 
 """# Define the pin sequence for counter-clockwise motion, noting that
 # two adjacent phases must be actuated together before stepping to
@@ -41,7 +42,7 @@ ccw = [ [1,0,0,0],[1,1,0,0],[0,1,0,0],[0,1,1,0],
 cw = ccw[:]  # use slicing to copy list (could also use ccw.copy() in Python 3)
 cw.reverse() # reverse the new cw sequence 
 Define the pin sequence for counter-clockwise motion, noting that 2 adjacent
-phases must be actuated together before stepping to a new phase so taht
+phases must be actuated together before stepping to a new phase so that
 the rotor is pulled in the right direction: """
 
         self.sequence = [ [1,0,0,0],[1,1,0,0],[0,1,0,0],[0,1,1,0],
