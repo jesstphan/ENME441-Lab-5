@@ -92,8 +92,7 @@ the rotor is pulled in the right direction: """
       self.delay_us(1000)
       ON = self.ADC.read(0)
       while(self.ADC.read(0) - ON /ON <= .09
-            ON_val = str(ON)
-            ADC_Read = str(self.ADC.read(0)
+            # while the photoresistor is dark so CHANGE THIS 
             self.halfstep(1)
       GPIO.output(self.LEDpin, GPIO.LOW)
       self.angle = 0
