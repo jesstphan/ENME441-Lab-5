@@ -17,6 +17,7 @@ while True:
   angle = int(form['slider1'])
   Object.goAngle(angle)
   
- if str(form['zerobutton']) == 'Change 
+ if str(form['zerobutton']) == "Change back to zero":
+  Object.zero()
 
 
