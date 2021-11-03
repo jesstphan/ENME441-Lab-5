@@ -1,9 +1,16 @@
 <html>
-<form action="/cgi-bin/stepper.py" method="POST">
+<form action="/cgi-bin/stepper5.py" method="POST">
   <input type="range" name="slider1" min ="0" max="360" value ="0">
   <input type="submit" value="Submit Angle">
-  <br><br>
+  <br>
   <input type="submit" name = 'zerobutton" value="Change back to zero"> 
+  <br>                           
+  <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1557923/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15">
+  <br>
+  <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1557923/widgets/375670">
+  <br> 
+</iframe>                             
+</iframe>
 </form>
 </html>
 
