@@ -19,5 +19,17 @@ while True:
   
  if str(form['zerobutton']) == "Change back to zero":
   Object.zero()
+  with open('lab5.txt', 'w') as f:
+
+json.dump({'slider1':'s1', 'zerobutton':None}, f)
+  with open('lab5.txt', 'r') as f 
+  form = json.load(f)
+  time.sleep(1)
+  
+ except KeyboardInterrupt:
+  print("\nExiting")
+  GPIO.cleanup()
+  break 
+  
 
 
