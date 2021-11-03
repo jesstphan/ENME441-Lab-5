@@ -39,18 +39,16 @@ ccw = [ [1,0,0,0],[1,1,0,0],[0,1,0,0],[0,1,1,0],
 # Make a copy of the ccw sequence. This is needed since simply
 # saying cw = ccw would point both variables to the same list object:
 cw = ccw[:]  # use slicing to copy list (could also use ccw.copy() in Python 3)
-cw.reverse() # reverse the new cw sequence """
+cw.reverse() # reverse the new cw sequence 
+Define the pin sequence for counter-clockwise motion, noting that 2 adjacent
+phases must be actuated together before stepping to a new phase so taht
+the rotor is pulled in the right direction: """
 
-# Define the pin sequence for counter-clockwise motion, noting that 2 adjacent
-# phases must be actuated together before stepping to a new phase so taht
-# the rotor is pulled in the right direction:
-    self.sequence = [ [1,0,0,0],[1,1,0,0],[0,1,0,0],[0,1,1,0],
-                 [0,0,1,0],[0,0,1,1],[0,0,0,1],[1,0,0,1] ]
-
-   
-    self.state = 0 #Current position in stator sequence
-    self.angle = 0
-    self.ADC = PCF8591(0x48) 
+        self.sequence = [ [1,0,0,0],[1,1,0,0],[0,1,0,0],[0,1,1,0],
+                           [0,0,1,0],[0,0,1,1],[0,0,0,1],[1,0,0,1] ]
+        self.state = 0 #Current position in stator sequence
+        self.angle = 0 #Current position of angle 
+        self.ADC = PCF8591(0x48) 
 
     def delay_us(self,tus): # use microseconds to improve time resolution
       endTime = time.time() + float(tus)/ float(1E6)
@@ -72,21 +70,40 @@ cw.reverse() # reverse the new cw sequence """
       for step in range(steps):
         self.halfstep(dir)
           
-    def goAngle(self,GoAngle): #move to a specified angle, taking the shortest path at a user-defined speed
-        
-    
+    def goAngle(self,GoAngle): 
+      #move to a specified angle, taking the shortest path at a user-defined speed
+      self.InputAngle = str(self.angle)
+      math = (GoAngle - self.angle + 180) % 360 - 180
+      if math <= 180: 
+         Stepz= (math * (512*8))/360 #ccw
+         dir = +1
+        self.moveSteps(int(abs(Stepz)),dir)
+        self.angle = GoAngle
+      else:   
+         Stepz= (math * (512*8))/360 #cw
+         dir = -1
+         self.moveSteps(int(abs(Stepz)),dir)
+         self.angle = GoAngle
+       
     def zero(self): 
     #turn the motor until the photoresistor is occluded by the cardboard piece. 
     #Only actuate the LED while the zeroing process is ongoing.
       GPIO.output(self.LEDpin,GPIO.HIGH)
       self.delay_us(1000)
+      ON = self.ADC.read(0)
+      while(self.ADC.read(0) - ON /ON <= .09
+            ON_val = str(ON)
+            ADC_Read = str(self.ADC.read(0)
+            self.halfstep(1)
+      GPIO.output(self.LEDpin, GPIO.LOW)
+      self.angle = 0
       
-      
-    try:
+    
+    """try:
         moveSteps(1000,1)
     except:
         pass
-    GPIO.cleanup()
+    GPIO.cleanup() """
 
 """# Make a full rotation of the output shaft:
 def loop(dir): # dir = rotation direction (cw or ccw)
